@@ -30,7 +30,7 @@ export default class VehicleDetails extends React.Component {
   render() {
     let {regNo, routeNo} = this.state.inputData
     return (
-      <Card title="Enter Vehicle Details">
+      <Card title="Find Your Route">
         <Picker
           selectedValue={regNo}
           onValueChange={( itemValue, itemIndex) => this.handleChange("regNo", itemValue, itemIndex)}>
@@ -49,7 +49,7 @@ export default class VehicleDetails extends React.Component {
 
         <Button
           onPress={() => {this.setParent()}}
-          title="Show my Route"
+          title="Start Trip"
           color="#841584"
           accessibilityLabel="Displays the route"
         />
