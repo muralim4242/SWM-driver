@@ -10,19 +10,47 @@ export default class Home extends React.Component {
   {
     super(props);
     this.state={
-      isVehicleNumberEntered:false
+      isVehicleNumberEntered:false,
+      mapDetails:{
+        routes:[
+        {
+          collectionPoints:[
+            {
+              latitude: 37.78825,
+              longitude: -122.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+              title:"Collection point 1",
+              description:"Test collection points"
+            },
+            {
+              latitude: 37.78823,
+              longitude: -130.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+              title:"Collection point 2",
+              description:"Test collection points"
+            },
+            {
+              latitude: 37.78880,
+              longitude: -132.4324,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+              title:"Collection point 3",
+              description:"Test collection points"
+            }
+          ]
+        }
+      ],
+      vehicleType:"truck",
+      vehicleIconUrl:"https://s3.amazonaws.com/locus-client-assets/test/vehicles/car.png"
+     }
     }
   }
 
   render()
   {
-    let {isVehicleNumberEntered}=this.state;
-    return (
-        <Card title="">
-          {
-            isVehicleNumberEntered?<VehicleDetails/>:<CollectionMap/>
-          }
-        </Card>
-      )
+    let {isVehicleNumberEntered,mapDetails}=this.state;
+    return  isVehicleNumberEntered?<Card title=""><VehicleDetails/></Card>:<CollectionMap mapDetails={mapDetails}/>
   }
 }
