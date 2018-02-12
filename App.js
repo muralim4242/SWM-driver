@@ -8,8 +8,16 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Button >test</Button>
+      <Button
+        icon={
+          <Icon
+            name='arrow-right'
+            size={15}
+            color='white'
+          />
+        }
+        text='BUTTON WITH ICON'
+        />
       </View>
     );
   }
