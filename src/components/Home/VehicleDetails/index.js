@@ -20,11 +20,13 @@ export default class VehicleDetails extends React.Component {
   }
 
   setParent = () => {
-    alert(this.state.inputData["regNo"] , this.state.inputData["routeNo"])
     if(this.state.inputData["regNo"] && this.state.inputData["routeNo"]) {
-      console.log(this.state.inputData["regNo"] && this.state.inputData["routeNo"])
       this.props.startMyRoute();
     }
+    else {
+      alert("Plase enter valid data");
+    }
+
   }
 
   render() {

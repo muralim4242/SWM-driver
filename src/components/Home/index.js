@@ -16,24 +16,24 @@ export default class Home extends React.Component {
         {
           collectionPoints:[
             {
-              latitude: 37.78825,
-              longitude: -122.4324,
+              latitude: 12.9226,
+              longitude: 77.6174,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
               title:"Collection point 1",
               description:"Test collection points"
             },
             {
-              latitude: 37.78823,
-              longitude: -130.4324,
+              latitude: 12.9592,
+              longitude: 77.6974,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
               title:"Collection point 2",
               description:"Test collection points"
             },
             {
-              latitude: 37.78880,
-              longitude: -132.4324,
+              latitude: 12.924,
+              longitude: 77.6651,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
               title:"Collection point 3",
@@ -48,9 +48,16 @@ export default class Home extends React.Component {
     }
   }
 
+  _startMyRoute =()=>{
+    this.setState({
+      isVehicleNumberEntered:true
+    })
+  }
+
   render()
   {
+    let {_startMyRoute}=this;
     let {isVehicleNumberEntered,mapDetails}=this.state;
-    return  isVehicleNumberEntered?<Card title=""><VehicleDetails/></Card>:<CollectionMap mapDetails={mapDetails}/>
+    return  isVehicleNumberEntered?<CollectionMap mapDetails={mapDetails}/>:<VehicleDetails startMyRoute={_startMyRoute}/>
   }
 }
