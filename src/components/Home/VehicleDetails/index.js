@@ -29,9 +29,9 @@ export default class VehicleDetails extends React.Component {
           selectedValue={regNo}
           onValueChange={(itemValue, itemIndex) => this.handleChange("regNo", itemValue, itemIndex)}>
           <Picker.Item label="Enter Vehicle No." value="" />
-          <Picker.Item label="Veh 1201" value="Veh 1201" />
-          <Picker.Item label="Veh 1202" value="Veh 1202" />
-          <Picker.Item label="veh 1203" value="Veh 1203" />
+          <Picker.Item label="Vehicle 1201" value="Veh 1201" />
+          <Picker.Item label="Vehicle 1202" value="Veh 1202" />
+          <Picker.Item label="Vehicle 1203" value="Veh 1203" />
         </Picker>
 
         <Picker

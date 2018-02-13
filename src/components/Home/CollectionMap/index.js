@@ -2,7 +2,7 @@ import React from "react";
 import { Platform, View, Text,Image } from "react-native";
 import { MapView } from "expo";
 import { Constants, Location, Permissions } from "expo";
-import collectionPoint from '../../../../assets/garbage-pickup.jpg';
+import collectionPoint from '../../../../assets/garbage-pickup.png';
 import truck from '../../../../assets/truck.png';
 
 var timerObject;
