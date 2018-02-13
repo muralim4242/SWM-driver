@@ -13,6 +13,15 @@ export default class Home extends React.Component {
       mapDetails: {
         routes: [
           {
+            dumpingGround:
+              {
+                latitude: 12.9234,
+                longitude: 77.634,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+                title: "Dumping ground 1",
+                description: "Test dumping ground"
+              },
             collectionPoints: [
               {
                 latitude: 12.9226,
