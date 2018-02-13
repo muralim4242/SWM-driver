@@ -1,7 +1,7 @@
 import React from 'react';
-import { Picker, Button } from 'react-native'
+import { Picker, Button,Image } from 'react-native'
 import { Card } from 'react-native-elements'
-
+import truck from '../../../../assets/garbagetruck.jpg';
 
 export default class VehicleDetails extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default class VehicleDetails extends React.Component {
     let { regNo, routeNo } = this.props.inputData
     return (
       <Card title="Find Your Route" >
-
+        <Image source={truck} style={{width: 70, height: 50 }} />
         <Picker
           selectedValue={regNo}
           onValueChange={(itemValue, itemIndex) => this.handleChange("regNo", itemValue, itemIndex)}>
