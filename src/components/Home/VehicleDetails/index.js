@@ -6,36 +6,29 @@ import { Card } from 'react-native-elements'
 export default class VehicleDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      inputData: {}
-    }
   }
   handleChange = (prop, itemValue, itemIndex) => {
-    this.setState({
-      inputData: {
-        ...this.state.inputData,
-        [prop]: itemValue
-      }
-    })
+    this.props.setInputParent(prop, itemValue, itemIndex);
   }
 
   setParent = () => {
-    if(this.state.inputData["regNo"] && this.state.inputData["routeNo"]) {
+    if (this.props.inputData["regNo"] && this.props.inputData["routeNo"]) {
       this.props.startMyRoute();
     }
     else {
       alert("Plase enter valid data");
     }
-
   }
 
   render() {
-    let {regNo, routeNo} = this.state.inputData
+    let { regNo, routeNo } = this.props.inputData
     return (
-      <Card title="Find Your Route">
+      <Card title="Find Your Route" >
+
         <Picker
           selectedValue={regNo}
-          onValueChange={( itemValue, itemIndex) => this.handleChange("regNo", itemValue, itemIndex)}>
+          onValueChange={(itemValue, itemIndex) => this.handleChange("regNo", itemValue, itemIndex)}>
+          <Picker.Item label="Enter Vehicle No." value="" />
           <Picker.Item label="Veh 1201" value="Veh 1201" />
           <Picker.Item label="Veh 1202" value="Veh 1202" />
           <Picker.Item label="veh 1203" value="Veh 1203" />
@@ -43,14 +36,15 @@ export default class VehicleDetails extends React.Component {
 
         <Picker
           selectedValue={routeNo}
-          onValueChange={( itemValue, itemIndex) => this.handleChange("routeNo", itemValue, itemIndex)}>
+          onValueChange={(itemValue, itemIndex) => this.handleChange("routeNo", itemValue, itemIndex)}>
+          <Picker.Item label="Enter Route" value="" />
           <Picker.Item label="Route1" value="Route1" />
           <Picker.Item label="Route2" value="Route2" />
           <Picker.Item label="Route3" value="Route3" />
         </Picker>
 
         <Button
-          onPress={() => {this.setParent()}}
+          onPress={() => { this.setParent() }}
           title="Start Trip"
           color="#841584"
           accessibilityLabel="Displays the route"
