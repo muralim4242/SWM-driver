@@ -24,7 +24,7 @@ export default class VehicleDetails extends React.Component {
     let { regNo, routeNo } = this.props.inputData
     return (
       <Card title="Find Your Route" >
-        <Image source={truck} style={{width: 70, height: 50 }} />
+        <Image source={truck} style={{flex: 1 ,width: 100, height: 100 }} />
         <Picker
           selectedValue={regNo}
           onValueChange={(itemValue, itemIndex) => this.handleChange("regNo", itemValue, itemIndex)}>

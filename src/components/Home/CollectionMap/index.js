@@ -1,7 +1,8 @@
 import React from "react";
-import { Platform, View, Text,Image } from "react-native";
+import { Platform, View, Text, Image, Button } from "react-native";
 import { MapView } from "expo";
 import { Constants, Location, Permissions } from "expo";
+import { commonApi } from "../../../utility/api";
 import collectionPoint from '../../../../assets/garbage-pickup.png';
 import truck from '../../../../assets/truck.png';
 
@@ -53,6 +54,13 @@ export default class CollectionMap extends React.Component {
 
   _updateLocation = location => {
     //call api for updating location and batery info
+    commonApi("post", "", {}, location)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -69,19 +77,18 @@ export default class CollectionMap extends React.Component {
         showsUserLocation={true}
         showsMyLocationButton={true}
       >
-        {location &&  <MapView.Marker
-              key={location.coords.latitude}
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude
-              }}
-              title={"My location"}
-              description={"Vehicle Location"}
-              image={truck}
-            >
-            
-            </MapView.Marker>
-        }
+        {location && (
+          <MapView.Marker
+            key={location.coords.latitude}
+            coordinate={{
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude
+            }}
+            title={"My location"}
+            description={"Vehicle Location"}
+            image={truck}
+          />
+        )}
 
         {mapDetails &&
           mapDetails.routes[0].collectionPoints.map((marker, index) => (
@@ -97,16 +104,16 @@ export default class CollectionMap extends React.Component {
             />
           ))}
 
-
-          {mapDetails && <MapView.Marker
-                coordinate={{
-                  latitude: mapDetails.routes[0].dumpingGround.latitude,
-                  longitude: mapDetails.routes[0].dumpingGround.longitude
-                }}
-                title={mapDetails.routes[0].dumpingGround.title}
-                description={mapDetails.routes[0].dumpingGround.description}
-              />
-          }
+        {mapDetails && (
+          <MapView.Marker
+            coordinate={{
+              latitude: mapDetails.routes[0].dumpingGround.latitude,
+              longitude: mapDetails.routes[0].dumpingGround.longitude
+            }}
+            title={mapDetails.routes[0].dumpingGround.title}
+            description={mapDetails.routes[0].dumpingGround.description}
+          />
+        )}
 
         <MapView.Polyline
           coordinates={
@@ -120,7 +127,10 @@ export default class CollectionMap extends React.Component {
                 mapDetails.routes[0].dumpingGround
               ]
             ) : (
-              [mapDetails.routes[0].dumpingGround,...mapDetails.routes[0].collectionPoints]
+              [
+                mapDetails.routes[0].dumpingGround,
+                ...mapDetails.routes[0].collectionPoints
+              ]
             )
           }
           strokeColor="#0bb4f1" // fallback for when `strokeColors` is not supported by the map-provider
@@ -128,7 +138,7 @@ export default class CollectionMap extends React.Component {
             "#7F0000",
             "#00000000", // no color, creates a "long" gradient between the previous and next coordinate
             "#B24112",
-            '#E5845C'
+            "#E5845C"
           ]}
           strokeWidth={6}
         />

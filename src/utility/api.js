@@ -2,14 +2,14 @@ import axios from 'axios';
 import _ from 'lodash';
 
 var instance = axios.create({
-  baseURL: window.location.origin,
+  baseURL: "http://172.16.4.128:8082",
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 //mockdata end point will remove in future
-export const commonApi = async(method = "get", context = "/mockdata", queryObject = {}, body = {}) => {
+export const commonApi = async(method = "get", context = "/topics/test/partitions/0/", queryObject = {}, body = {}) => {
   var url = context;
   url += !_.isEmpty(queryObject) ? '?' : "";
   for (var variable in queryObject) {
