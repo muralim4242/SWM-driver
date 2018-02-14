@@ -9,7 +9,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVehicleNumberEntered: true,
+      isVehicleNumberEntered: false,
       mapDetails: {
         routes: [
           {
@@ -74,9 +74,9 @@ export default class Home extends React.Component {
 
   render() {
     let { _startMyRoute, _setInputData } = this;
-    let { isVehicleNumberEntered, mapDetails } = this.state;
+    let { isVehicleNumberEntered, mapDetails,inputData } = this.state;
     return isVehicleNumberEntered
-      ? <CollectionMap mapDetails={mapDetails} />
-      : <VehicleDetails startMyRoute={_startMyRoute} setInputParent={_setInputData} inputData={this.state.inputData} />
+      ? <CollectionMap mapDetails={mapDetails} inputData={inputData}/>
+      : <VehicleDetails startMyRoute={_startMyRoute} setInputParent={_setInputData} inputData={inputData} />
   }
 }

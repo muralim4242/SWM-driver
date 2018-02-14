@@ -1,10 +1,11 @@
 import React from "react";
-import { Platform, View, Text, Image, Button } from "react-native";
+import { Platform, View, Text, Image, Button,DeviceEventEmitter,NativeModules } from "react-native";
 import { MapView } from "expo";
 import { Constants, Location, Permissions } from "expo";
 import { commonApi } from "../../../utility/api";
 import collectionPoint from '../../../../assets/garbage-pickup.png';
 import truck from '../../../../assets/truck.png';
+var BatteryManager = require('NativeModules').BatteryManager;
 
 var timerObject;
 
@@ -12,7 +13,9 @@ export default class CollectionMap extends React.Component {
   state = {
     location: null,
     errorMessage: null,
-    refreshSeconds: 15000
+    refreshSeconds: 15000,
+    batteryLevel: null,
+    charging:false
   };
 
   componentWillMount() {
@@ -33,8 +36,22 @@ export default class CollectionMap extends React.Component {
     }
   }
 
+  _onBatteryStatus= (info)=>{
+    this.setState({batteryLevel: info.level,charging: info.isPlugged});
+  }
+
+  componentDidMount() {
+    // let {_onBatteryStatus}=this;
+    // BatteryManager.updateBatteryLevel(function(info){
+    //   this._subscription = DeviceEventEmitter.addListener('BatteryStatus', _onBatteryStatus);
+    //   this.setState({batteryLevel: info.level,charging: info.isPlugged});
+    // }.bind(this));
+  }
+
+
   componentWillUnmount() {
     clearInterval(timerObject);
+    this._subscription.remove();
   }
 
   _getLocationAsync = async () => {
@@ -47,18 +64,23 @@ export default class CollectionMap extends React.Component {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    console.log(location);
+    // console.log(location);
     this.setState({ location });
-    _updateLocation();
+    _updateLocation(location);
   };
 
   _updateLocation = location => {
     //call api for updating location and batery info
-    commonApi("post", "", {}, location)
+    let {inputData}=this.props;
+    let {batteryLevel,charging}=this.state;
+    // location={"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{}, "key":"One",...location}}]};
+    console.log({"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{batteryLevel,charging}, "key":"One",...location}}]});
+    commonApi("post", "", {}, {"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{batteryLevel,charging}, "key":"One","coords":location.coords,"mocked":location.mocked,"timestamp":location.timestamp}}]})
       .then(res => {
         console.log(res);
       })
       .catch(err => {
+        // console.log("hai");
         console.log(err);
       });
   };
