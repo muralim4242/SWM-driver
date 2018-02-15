@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, View, Text, Image, Button,DeviceEventEmitter,NativeModules } from "react-native";
+import { Platform, View, Text, Image, Button,DeviceEventEmitter,NativeModules ,Dimensions} from "react-native";
 import { MapView } from "expo";
 import { Constants, Location, Permissions } from "expo";
 import { commonApi } from "../../../utility/api";
@@ -31,7 +31,7 @@ export default class CollectionMap extends React.Component {
       _getLocationAsync();
       //And it will call every refreshSeconds
       timerObject = setInterval(() => {
-        _getLocationAsync();
+        ();
       }, refreshSeconds);
     }
   }
@@ -86,11 +86,19 @@ export default class CollectionMap extends React.Component {
   };
 
   render() {
-    let { mapDetails } = this.props;
+    let { mapDetails ,inputData,startMyRoute} = this.props;
     let { location } = this.state;
+    let index=0;
+    if (inputData.routeNo=="Route2") {
+      index=1;
+    } else if(inputData.routeNo=="Route3"){
+      index=2;
+    }
     return (
-      <MapView
-        style={{ flex: 1 }}
+      <View>
+
+      {location && <MapView
+        style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height-35}}
         initialRegion={mapDetails.routes[0].collectionPoints[0]}
         loadingEnabled={true}
         loadingIndicatorColor={"#606060"}
@@ -113,7 +121,7 @@ export default class CollectionMap extends React.Component {
         )}
 
         {mapDetails &&
-          mapDetails.routes[0].collectionPoints.map((marker, index) => (
+          mapDetails.routes[index].collectionPoints.map((marker, index) => (
             <MapView.Marker
               key={index}
               coordinate={{
@@ -129,11 +137,11 @@ export default class CollectionMap extends React.Component {
         {mapDetails && (
           <MapView.Marker
             coordinate={{
-              latitude: mapDetails.routes[0].dumpingGround.latitude,
-              longitude: mapDetails.routes[0].dumpingGround.longitude
+              latitude: mapDetails.routes[index].dumpingGround.latitude,
+              longitude: mapDetails.routes[index].dumpingGround.longitude
             }}
-            title={mapDetails.routes[0].dumpingGround.title}
-            description={mapDetails.routes[0].dumpingGround.description}
+            title={mapDetails.routes[index].dumpingGround.title}
+            description={mapDetails.routes[index].dumpingGround.description}
           />
         )}
 
@@ -145,13 +153,13 @@ export default class CollectionMap extends React.Component {
                   latitude: location.coords.latitude,
                   longitude: location.coords.longitude
                 },
-                ...mapDetails.routes[0].collectionPoints,
-                mapDetails.routes[0].dumpingGround
+                ...mapDetails.routes[index].collectionPoints,
+                mapDetails.routes[index].dumpingGround
               ]
             ) : (
               [
-                mapDetails.routes[0].dumpingGround,
-                ...mapDetails.routes[0].collectionPoints
+                mapDetails.routes[index].dumpingGround,
+                ...mapDetails.routes[index].collectionPoints
               ]
             )
           }
@@ -164,7 +172,15 @@ export default class CollectionMap extends React.Component {
           ]}
           strokeWidth={6}
         />
-      </MapView>
+      </MapView>}
+      <Button
+        style={{width: Dimensions.get('window').width, height: 35}}
+        onPress={()=>{this.props.startMyRoute(false)}}
+        title="End Trip"
+        color="#841584"
+        accessibilityLabel="Go back to home"
+      />
+      </View>
     );
   }
 }

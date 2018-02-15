@@ -4,7 +4,7 @@ import _ from 'lodash';
 var instance = axios.create({
   baseURL: "http://172.16.4.164:8082",
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/vnd.kafka.json.v2+json',
   },
 });
 

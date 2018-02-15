@@ -13,7 +13,7 @@ export default class VehicleDetails extends React.Component {
 
   setParent = () => {
     if (this.props.inputData["regNo"] && this.props.inputData["routeNo"]) {
-      this.props.startMyRoute();
+      this.props.startMyRoute(true);
     }
     else {
       alert("Plase enter valid data");
@@ -23,15 +23,15 @@ export default class VehicleDetails extends React.Component {
   render() {
     let { regNo, routeNo } = this.props.inputData
     return (
-      <Card title="Find Your Route" >
-        <Image source={truck} style={{flex: 1 ,width: 100, height: 100 }} />
+      <Card title="Find Your Route" style={{marginTop:"10px"}}>
+        {/*<Image source={truck} style={{flex: 1 ,width: 100, height: 100 }} />*/}
         <Picker
           selectedValue={regNo}
           onValueChange={(itemValue, itemIndex) => this.handleChange("regNo", itemValue, itemIndex)}>
           <Picker.Item label="Enter Vehicle No." value="" />
-          <Picker.Item label="Vehicle 1201" value="Veh 1201" />
-          <Picker.Item label="Vehicle 1202" value="Veh 1202" />
-          <Picker.Item label="Vehicle 1203" value="Veh 1203" />
+          <Picker.Item label="KA1201" value="KA1201" />
+          <Picker.Item label="KA1202" value="KA1202" />
+          <Picker.Item label="KA1203" value="KA1203" />
         </Picker>
 
         <Picker
