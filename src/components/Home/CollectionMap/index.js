@@ -31,7 +31,7 @@ export default class CollectionMap extends React.Component {
       _getLocationAsync();
       //And it will call every refreshSeconds
       timerObject = setInterval(() => {
-        ();
+        _getLocationAsync();
       }, refreshSeconds);
     }
   }
@@ -74,13 +74,13 @@ export default class CollectionMap extends React.Component {
     let {inputData}=this.props;
     let {batteryLevel,charging}=this.state;
     // location={"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{}, "key":"One",...location}}]};
-    console.log({"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{batteryLevel,charging}, "key":"One",...location}}]});
-    commonApi("post", "", {}, {"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{batteryLevel,charging}, "key":"One","coords":location.coords,"mocked":location.mocked,"timestamp":location.timestamp}}]})
+    console.log({"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{batteryLevel,charging},...location},"key":"One"}]});
+    commonApi("post", "/topics/tour.info", {}, {"records":[{"value":{"vehicleNo":inputData.regNo,"routeCode":inputData.routeNo,"batteryInfo":{batteryLevel,charging},...location},"key":"One"}]})
       .then(res => {
         console.log(res);
       })
       .catch(err => {
-        // console.log("hai");
+        console.log("hai");
         console.log(err);
       });
   };
@@ -114,7 +114,7 @@ export default class CollectionMap extends React.Component {
               latitude: location.coords.latitude,
               longitude: location.coords.longitude
             }}
-            title={"My location"}
+            title={inputData.regNo}
             description={"Vehicle Location"}
             image={truck}
           />

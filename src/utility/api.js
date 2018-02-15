@@ -9,7 +9,7 @@ var instance = axios.create({
 });
 
 //mockdata end point will remove in future
-export const commonApi = async(method = "get", context = "/topics/tour.info", queryObject = {}, body = {}) => {
+export const commonApi = async(method = "get", context = "", queryObject = {}, body = {}) => {
   var url = context;
   url += !_.isEmpty(queryObject) ? '?' : "";
   for (var variable in queryObject) {
@@ -17,6 +17,7 @@ export const commonApi = async(method = "get", context = "/topics/tour.info", qu
       url += '&' + variable + '=' + queryObject[variable];
     }
   }
+  console.log(url);
   switch (method) {
     case "get":
       try {
